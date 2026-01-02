@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { Loader2, Check, X, Shield } from 'lucide-react';
 import { authApi } from '@/lib/api/auth';
 
-export default function InvitePage() {
+function InvitePageContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
@@ -189,5 +189,17 @@ function PasswordRequirement({ met, text }: { met: boolean; text: string }) {
             )}
             <span className={met ? 'text-emerald-600' : 'text-slate-600'}>{text}</span>
         </div>
+    );
+}
+
+export default function InvitePage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+                <Loader2 className="h-8 w-8 animate-spin text-white" />
+            </div>
+        }>
+            <InvitePageContent />
+        </Suspense>
     );
 }

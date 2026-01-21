@@ -55,7 +55,7 @@ export default function DashboardLayout({
     const navigation = [
         { name: 'Dashboard', href: '/dashboard', icon: Home },
         { name: 'Admins', href: '/dashboard/admins', icon: Users },
-        { name: 'Chains', href: '/dashboard/chains', icon: Link2 },
+        { name: 'Networks', href: '/dashboard/networks', icon: Link2 },
         { name: 'Waitlist', href: '/dashboard/waitlist', icon: Mail },
         { name: 'Profile', href: '/dashboard/profile', icon: User },
         { name: 'Settings', href: '/dashboard/settings', icon: Settings },

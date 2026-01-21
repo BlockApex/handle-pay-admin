@@ -11,7 +11,13 @@ const apiClient: AxiosInstance = axios.create({
 // Request interceptor - add token
 apiClient.interceptors.request.use(
     (config) => {
-        // Token will be added from store in individual API functions
+        // Automatically attach token from localStorage
+        if (typeof window !== 'undefined') {
+            const token = localStorage.getItem('accessToken');
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+        }
         return config;
     },
     (error) => Promise.reject(error)

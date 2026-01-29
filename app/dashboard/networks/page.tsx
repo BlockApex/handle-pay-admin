@@ -396,11 +396,22 @@ export default function NetworksPage() {
 
                             {/* EVM Fields */}
                             {chainType === 'evm' && (
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div><label className="block text-sm font-medium text-slate-700 mb-1">Name</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.evm?.name} onChange={e => updateEvmField('name', e.target.value)} required /></div>
-                                    <div><label className="block text-sm font-medium text-slate-700 mb-1">Chain ID</label><input type="number" className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.evm?.chainId} onChange={e => updateEvmField('chainId', parseInt(e.target.value))} required /></div>
+                                <div className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div><label className="block text-sm font-medium text-slate-700 mb-1">Name</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.evm?.name} onChange={e => updateEvmField('name', e.target.value)} required /></div>
+                                        <div><label className="block text-sm font-medium text-slate-700 mb-1">Chain ID</label><input type="number" className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.evm?.chainId} onChange={e => updateEvmField('chainId', parseInt(e.target.value))} required /></div>
+                                    </div>
                                     <div><label className="block text-sm font-medium text-slate-700 mb-1">RPC URL</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.evm?.rpcUrl} onChange={e => updateEvmField('rpcUrl', e.target.value)} required /></div>
-                                    {/* Add more fields as needed or reuse full form */}
+                                    <div className="flex items-center gap-2">
+                                        <input 
+                                            type="checkbox" 
+                                            id="isTestnet" 
+                                            checked={!chainFormData.evm?.isTestnet} 
+                                            onChange={e => updateEvmField('isTestnet', !e.target.checked)}
+                                            className="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500"
+                                        />
+                                        <label htmlFor="isTestnet" className="text-sm font-medium text-slate-700">Mainnet (uncheck for testnet)</label>
+                                    </div>
                                 </div>
                             )}
 
@@ -413,6 +424,7 @@ export default function NetworksPage() {
                                         <select className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.svm?.network} onChange={e => updateSvmField('network', e.target.value)}>
                                             <option value="devnet">Devnet</option>
                                             <option value="testnet">Testnet</option>
+                                            <option value="mainnet-beta">Mainnet-beta</option>
                                         </select>
                                     </div>
                                     <div><label className="block text-sm font-medium text-slate-700 mb-1">RPC URL</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.svm?.rpcUrl} onChange={e => updateSvmField('rpcUrl', e.target.value)} required /></div>

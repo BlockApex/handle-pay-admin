@@ -378,7 +378,7 @@ export default function NetworksPage() {
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
                     <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl">
                         <div className="p-6 border-b">
-                            <h2 className="text-xl font-bold">{editingChain ? 'Edit Chain' : 'Add Chain'}</h2>
+                            <h2 className="text-xl font-bold text-slate-900">{editingChain ? 'Edit Chain' : 'Add Chain'}</h2>
                         </div>
                         <form onSubmit={handleChainSubmit} className="p-6 space-y-4">
                             {/* We are reusing the massive form logic from before, just wrapped for brevity in this artifact */}
@@ -387,8 +387,8 @@ export default function NetworksPage() {
 
                             {/* Chain Type */}
                             <div>
-                                <label className="block text-sm font-medium mb-1">Type</label>
-                                <select value={chainType} onChange={e => setChainType(e.target.value as any)} className="w-full border p-2 rounded" disabled={!!editingChain}>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Type</label>
+                                <select value={chainType} onChange={e => setChainType(e.target.value as any)} className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" disabled={!!editingChain}>
                                     <option value="evm">EVM</option>
                                     <option value="svm">SVM</option>
                                 </select>
@@ -397,9 +397,9 @@ export default function NetworksPage() {
                             {/* EVM Fields */}
                             {chainType === 'evm' && (
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div><label className="block text-sm font-medium">Name</label><input className="w-full border p-2 rounded" value={chainFormData.evm?.name} onChange={e => updateEvmField('name', e.target.value)} required /></div>
-                                    <div><label className="block text-sm font-medium">Chain ID</label><input type="number" className="w-full border p-2 rounded" value={chainFormData.evm?.chainId} onChange={e => updateEvmField('chainId', parseInt(e.target.value))} required /></div>
-                                    <div><label className="block text-sm font-medium">RPC URL</label><input className="w-full border p-2 rounded" value={chainFormData.evm?.rpcUrl} onChange={e => updateEvmField('rpcUrl', e.target.value)} required /></div>
+                                    <div><label className="block text-sm font-medium text-slate-700 mb-1">Name</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.evm?.name} onChange={e => updateEvmField('name', e.target.value)} required /></div>
+                                    <div><label className="block text-sm font-medium text-slate-700 mb-1">Chain ID</label><input type="number" className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.evm?.chainId} onChange={e => updateEvmField('chainId', parseInt(e.target.value))} required /></div>
+                                    <div><label className="block text-sm font-medium text-slate-700 mb-1">RPC URL</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.evm?.rpcUrl} onChange={e => updateEvmField('rpcUrl', e.target.value)} required /></div>
                                     {/* Add more fields as needed or reuse full form */}
                                 </div>
                             )}
@@ -407,21 +407,21 @@ export default function NetworksPage() {
                             {/* SVM Fields */}
                             {chainType === 'svm' && (
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div><label className="block text-sm font-medium">Name</label><input className="w-full border p-2 rounded" value={chainFormData.svm?.name} onChange={e => updateSvmField('name', e.target.value)} required /></div>
+                                    <div><label className="block text-sm font-medium text-slate-700 mb-1">Name</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.svm?.name} onChange={e => updateSvmField('name', e.target.value)} required /></div>
                                     <div>
-                                        <label className="block text-sm font-medium">Network</label>
-                                        <select className="w-full border p-2 rounded" value={chainFormData.svm?.network} onChange={e => updateSvmField('network', e.target.value)}>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Network</label>
+                                        <select className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.svm?.network} onChange={e => updateSvmField('network', e.target.value)}>
                                             <option value="devnet">Devnet</option>
                                             <option value="testnet">Testnet</option>
                                         </select>
                                     </div>
-                                    <div><label className="block text-sm font-medium">RPC URL</label><input className="w-full border p-2 rounded" value={chainFormData.svm?.rpcUrl} onChange={e => updateSvmField('rpcUrl', e.target.value)} required /></div>
+                                    <div><label className="block text-sm font-medium text-slate-700 mb-1">RPC URL</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.svm?.rpcUrl} onChange={e => updateSvmField('rpcUrl', e.target.value)} required /></div>
                                 </div>
                             )}
 
                             <div className="flex justify-end gap-2 mt-6">
-                                <button type="button" onClick={() => setShowChainModal(false)} className="px-4 py-2 border rounded">Cancel</button>
-                                <button type="submit" className="px-4 py-2 bg-emerald-600 text-white rounded">Save</button>
+                                <button type="button" onClick={() => setShowChainModal(false)} className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50">Cancel</button>
+                                <button type="submit" className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Save</button>
                             </div>
                         </form>
                     </div>

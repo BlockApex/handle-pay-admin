@@ -14,6 +14,7 @@ export interface Token {
     decimals: number;
     logoURI?: string;
     contracts: TokenContract[];
+    isMoneyWalletToken: boolean;
     isActive: boolean;
     createdAt: string;
 }
@@ -23,6 +24,7 @@ export interface CreateTokenDto {
     name: string;
     decimals?: number;
     logoURI?: string;
+    isMoneyWalletToken?: boolean;
 }
 
 export interface AddContractDto {

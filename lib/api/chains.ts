@@ -30,6 +30,8 @@ export interface ChainConfiguration {
         isTestnet: boolean;
     };
     isPrimary: boolean;
+    logoURI?: string;
+    isMoneyWalletChain: boolean;
     isActive: boolean;
     order: number;
     createdAt: string;

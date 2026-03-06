@@ -60,6 +60,8 @@ export default function NetworksPage() {
     const [chainFormData, setChainFormData] = useState<CreateChainDto>({
         type: 'evm',
         isPrimary: false,
+        isMoneyWalletChain: false,
+        logoURI: '',
         isActive: true,
         order: 0,
         evm: defaultEvm,
@@ -69,7 +71,8 @@ export default function NetworksPage() {
         symbol: '',
         name: '',
         decimals: 18,
-        logoURI: ''
+        logoURI: '',
+        isMoneyWalletToken: false
     });
 
     const [contractFormData, setContractFormData] = useState<AddContractDto>({
@@ -114,6 +117,8 @@ export default function NetworksPage() {
             setChainFormData({
                 type: chain.type,
                 isPrimary: chain.isPrimary,
+                isMoneyWalletChain: chain.isMoneyWalletChain || false,
+                logoURI: chain.logoURI || '',
                 isActive: chain.isActive,
                 order: chain.order,
                 evm: chain.evm || defaultEvm,
@@ -125,6 +130,8 @@ export default function NetworksPage() {
             setChainFormData({
                 type: 'evm',
                 isPrimary: false,
+                isMoneyWalletChain: false,
+                logoURI: '',
                 isActive: true,
                 order: chains.length,
                 evm: defaultEvm,
@@ -167,7 +174,7 @@ export default function NetworksPage() {
 
     // --- Token Handlers ---
     const handleOpenTokenModal = () => {
-        setTokenFormData({ symbol: '', name: '', decimals: 18, logoURI: '' });
+        setTokenFormData({ symbol: '', name: '', decimals: 18, logoURI: '', isMoneyWalletToken: false });
         setShowTokenModal(true);
     };
 
@@ -292,6 +299,7 @@ export default function NetworksPage() {
                                         <td className="px-6 py-4 text-sm text-slate-900 font-medium">
                                             {chain.type === 'evm' ? chain.evm?.name : chain.svm?.name}
                                             {chain.isPrimary && <span className="ml-2 text-xs text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Primary</span>}
+                                            {chain.isMoneyWalletChain && <span className="ml-2 text-xs text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">Money Wallet</span>}
                                         </td>
                                         <td className="px-6 py-4 text-sm text-slate-500">{chain.type === 'evm' ? chain.evm?.chainId : chain.svm?.network}</td>
                                         <td className="px-6 py-4 text-sm">
@@ -329,7 +337,9 @@ export default function NetworksPage() {
                                             )}
                                             <div>
                                                 <h3 className="text-lg font-medium text-slate-900">{token.name} <span className="text-slate-500 text-sm">({token.symbol})</span></h3>
-                                                <p className="text-sm text-slate-500">Decimals: {token.decimals} • IsActive: {token.isActive ? 'Yes' : 'No'}</p>
+                                                <p className="text-sm text-slate-500">Decimals: {token.decimals} • IsActive: {token.isActive ? 'Yes' : 'No'}
+                                                    {token.isMoneyWalletToken && <span className="ml-2 text-xs text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">Money Wallet Token</span>}
+                                                </p>
                                             </div>
                                         </div>
                                         <button onClick={() => handleOpenContractModal(token)} className="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg transition font-medium">
@@ -394,6 +404,12 @@ export default function NetworksPage() {
                                 </select>
                             </div>
 
+                            {/* Logo URI */}
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Logo URI</label>
+                                <input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={chainFormData.logoURI || ''} onChange={e => setChainFormData(prev => ({ ...prev, logoURI: e.target.value }))} placeholder="https://..." />
+                            </div>
+
                             {/* EVM Fields */}
                             {chainType === 'evm' && (
                                 <div className="space-y-4">
@@ -411,6 +427,16 @@ export default function NetworksPage() {
                                             className="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500"
                                         />
                                         <label htmlFor="isTestnet" className="text-sm font-medium text-slate-700">Mainnet (uncheck for testnet)</label>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <input 
+                                            type="checkbox" 
+                                            id="isMoneyWalletChain" 
+                                            checked={chainFormData.isMoneyWalletChain || false} 
+                                            onChange={e => setChainFormData(prev => ({ ...prev, isMoneyWalletChain: e.target.checked }))}
+                                            className="w-4 h-4 text-amber-600 border-slate-300 rounded focus:ring-amber-500"
+                                        />
+                                        <label htmlFor="isMoneyWalletChain" className="text-sm font-medium text-slate-700">Money Wallet Chain</label>
                                     </div>
                                 </div>
                             )}
@@ -450,6 +476,16 @@ export default function NetworksPage() {
                             <div><label className="block text-sm font-medium text-slate-700 mb-1">Name</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={tokenFormData.name} onChange={e => setTokenFormData({ ...tokenFormData, name: e.target.value })} required placeholder="USD Coin" /></div>
                             <div><label className="block text-sm font-medium text-slate-700 mb-1">Decimals</label><input type="number" className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={tokenFormData.decimals} onChange={e => setTokenFormData({ ...tokenFormData, decimals: parseInt(e.target.value) })} required /></div>
                             <div><label className="block text-sm font-medium text-slate-700 mb-1">Logo URI</label><input className="w-full border border-slate-300 p-2 rounded-lg text-slate-900 bg-white" value={tokenFormData.logoURI} onChange={e => setTokenFormData({ ...tokenFormData, logoURI: e.target.value })} placeholder="https://..." /></div>
+                            <div className="flex items-center gap-2">
+                                <input 
+                                    type="checkbox" 
+                                    id="isMoneyWalletToken" 
+                                    checked={tokenFormData.isMoneyWalletToken || false} 
+                                    onChange={e => setTokenFormData({ ...tokenFormData, isMoneyWalletToken: e.target.checked })}
+                                    className="w-4 h-4 text-amber-600 border-slate-300 rounded focus:ring-amber-500"
+                                />
+                                <label htmlFor="isMoneyWalletToken" className="text-sm font-medium text-slate-700">Money Wallet Token</label>
+                            </div>
                             <div className="flex justify-end gap-2 mt-4">
                                 <button type="button" onClick={() => setShowTokenModal(false)} className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50">Cancel</button>
                                 <button type="submit" className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Create Token</button>

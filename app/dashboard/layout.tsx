@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/auth-store';
-import { Home, Users, Settings, User, LogOut, Shield } from 'lucide-react';
+import { Home, Users, Settings, User, LogOut, Shield, Mail, Link2 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getInitials } from '@/lib/utils';
@@ -55,6 +55,8 @@ export default function DashboardLayout({
     const navigation = [
         { name: 'Dashboard', href: '/dashboard', icon: Home },
         { name: 'Admins', href: '/dashboard/admins', icon: Users },
+        { name: 'Networks', href: '/dashboard/networks', icon: Link2 },
+        { name: 'Waitlist', href: '/dashboard/waitlist', icon: Mail },
         { name: 'Profile', href: '/dashboard/profile', icon: User },
         { name: 'Settings', href: '/dashboard/settings', icon: Settings },
     ];

@@ -26,3 +26,17 @@ export function formatDateTime(date: Date | string): string {
 export function getInitials(firstName: string, lastName: string): string {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 }
+
+/**
+ * Pull a human-readable message out of an axios error. NestJS validation
+ * errors arrive as an array of strings; everything else is a single one.
+ */
+export function apiErrorMessage(error: unknown, fallback: string): string {
+    const message = (
+        error as {
+            response?: { data?: { message?: string | string[] } };
+        }
+    )?.response?.data?.message;
+    if (Array.isArray(message)) return message[0] ?? fallback;
+    return message ?? fallback;
+}

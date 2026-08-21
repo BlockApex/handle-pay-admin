@@ -31,6 +31,17 @@ export interface SupportMessage {
     /** `ticket` renders as the escalation card, using `meta`. */
     type: 'text' | 'ticket';
     meta: Record<string, unknown> | null;
+    /**
+     * Image attachments. `url` is a SIGNED link that expires (~30 min)
+     * and is regenerated every time the transcript is fetched — never
+     * cache or store it. Null means signing failed; show a placeholder
+     * rather than a broken image.
+     */
+    attachments?: {
+        url: string | null;
+        mime: string;
+        size: number;
+    }[];
     createdAt: string;
 }
 

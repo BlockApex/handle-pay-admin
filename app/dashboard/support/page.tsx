@@ -449,6 +449,39 @@ function Message({ message }: { message: SupportMessage }) {
                     }`}
                 >
                     {message.content}
+                    {(message.attachments?.length ?? 0) > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-2">
+                            {message.attachments?.map((a, idx) =>
+                                a.url ? (
+                                    // Opens the signed URL directly. It expires,
+                                    // so a tab left open overnight will 403 —
+                                    // reloading the ticket mints a fresh one.
+                                    <a
+                                        key={idx}
+                                        href={a.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="block"
+                                        title="Open full size"
+                                    >
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={a.url}
+                                            alt="Attachment from the user"
+                                            className="h-28 w-28 rounded-lg border border-black/10 object-cover transition hover:opacity-90"
+                                        />
+                                    </a>
+                                ) : (
+                                    <div
+                                        key={idx}
+                                        className="flex h-28 w-28 items-center justify-center rounded-lg border border-dashed border-slate-300 bg-white/60 p-2 text-center text-[11px] text-slate-500"
+                                    >
+                                        Image unavailable — reload the ticket
+                                    </div>
+                                ),
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
